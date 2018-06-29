@@ -135,7 +135,7 @@ add_executable(tao_parser_test
 set(SRC_XML_PARSER "${CMAKE_CURRENT_SOURCE_DIR}/src/xml_parser.py")
 message("  -- Source of Xml Parser location is ${SRC_XML_PARSER}")
 
-set( XMLPARSER "${CATKIN_DEVEL_PREFIX}/lib/${PROJECT_NAME}/decision_making_xml_parser.py" ) 
+set( XMLPARSER "${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/decision_making_xml_parser.py" ) 
 message("  -- Xml Parser location is ${XMLPARSER}")
   
 FILE(READ "${SRC_XML_PARSER}" SRC_XML_PARSER_TEXT )
@@ -151,6 +151,14 @@ target_link_libraries(tao_parser_test
 #   ${catkin_LIBRARIES}
 )
 
+add_custom_target(
+    copy_parser ALL
+    # copy script, set-up soname chain
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${PROJECT_SOURCE_DIR}/src/xml_parser.py ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}
+    COMMAND ${CMAKE_COMMAND} -E create_symlink xml_parser.py ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/decision_making_xml_parser.py
+)
+
+
 #############
 ## Install ##
 #############
@@ -160,17 +168,19 @@ target_link_libraries(tao_parser_test
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(PROGRAMS
+  ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/xml_parser.py
+  ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_LIB_DESTINATION}/decision_making_xml_parser.py
+  #DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS decision_making_parser decision_making_parser_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS decision_making_parser tao_parser_test
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/

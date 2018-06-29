@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+ cmake_minimum_required(VERSION 2.8.3)
 project(robot_task)
 
 ## Find catkin macros and libraries
@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(Boost REQUIRED COMPONENTS system thread)
 
 #set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-#include ( robot_task-macros )
+#include ( ${PROJECT_NAME}-macros )
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -70,10 +70,10 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
  INCLUDE_DIRS include
-# LIBRARIES robot_task
+# LIBRARIES ${PROJECT_NAME}
  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 # DEPENDS system_lib
-# CFG_EXTRAS robot_task-extras.cmake
+# CFG_EXTRAS ${PROJECT_NAME}-extras.cmake
 )
 
 
@@ -91,8 +91,8 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(robot_task
-#   src/${PROJECT_NAME}/robot_task.cpp
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/${PROJECT_NAME}.cpp
 # )
 
 ## Declare a cpp executable
@@ -105,8 +105,8 @@ add_executable(task_tester
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(dummy robot_task_generate_messages_cpp)
-add_dependencies(task_tester robot_task_generate_messages_cpp)
+add_dependencies(dummy ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(task_tester ${PROJECT_NAME}_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(dummy
@@ -131,18 +131,18 @@ target_link_libraries(task_tester
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS robot_task robot_task_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS task_tester dummy
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
@@ -156,7 +156,7 @@ target_link_libraries(task_tester
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_robot_task.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_${PROJECT_NAME}.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

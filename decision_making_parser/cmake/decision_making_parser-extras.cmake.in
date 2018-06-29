@@ -12,7 +12,8 @@ macro(decision_making_parsing _SRC_FILE_LIST)
 		set( CUR_BIN_DIR "${@PROJECT_NAME@_DEVEL_PREFIX}/lib/@PROJECT_NAME@/" )
 		message("  -- bin dirs is ${CUR_BIN_DIR}")
 		#message("  -- dir is ${@PROJECT_NAME@_DIR}")
-		message("  -- dev prefix is ${@PROJECT_NAME@_DEVEL_PREFIX}")
+		#message("  -- dev prefix is ${@PROJECT_NAME@_DEVEL_PREFIX}")
+		message("  -- dev prefix is ${@PROJECT_NAME@_PREFIX}")
 
 		#find_file(PARSER parse_code) 
 		#FILE(GLOB_RECURSE PARSER parse_code ${CUR_BIN_DIR})
@@ -23,8 +24,13 @@ macro(decision_making_parsing _SRC_FILE_LIST)
 		#set(SRC_XML_PARSER "${@PROJECT_NAME@_DEVEL_PREFIX}/../src/xml_parser.py")
 		#message("  -- Source of Xml Parser location is ${SRC_XML_PARSER}")
 
-		set( XMLPARSER "${CUR_BIN_DIR}decision_making_xml_parser.py" ) 
+		
+		
+		#set( XMLPARSER "${@PROJECT_NAME@_PREFIX}${CUR_BIN_DIR}decision_making_xml_parser.py" ) 
+		set( XMLPARSER "${@PROJECT_NAME@_PREFIX}/@CATKIN_PACKAGE_LIB_DESTINATION@/decision_making_xml_parser.py" )
+		
 		message("  -- Xml Parser location is ${XMLPARSER}")
+
 
 		#FILE(READ "${SRC_XML_PARSER}" SRC_XML_PARSER_TEXT )
 		#FILE(WRITE "${XMLPARSER}" "${SRC_XML_PARSER_TEXT}" )
