@@ -125,7 +125,7 @@ target_link_libraries(tao_example ${catkin_LIBRARIES} )
 #===================== ROS =============================================
 
 add_library(decision_making_ros src/ROSTask.cpp)
-add_dependencies(decision_making_ros robot_task_gencpp)
+add_dependencies(decision_making_ros robot_task_generate_messages_cpp)
 target_link_libraries(decision_making_ros ${catkin_LIBRARIES} )
 
 add_executable(ros_example src/RosExample.cpp)
@@ -178,18 +178,18 @@ decision_making_parsing(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS decision_making decision_making_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS decision_making_ros ros_example
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
