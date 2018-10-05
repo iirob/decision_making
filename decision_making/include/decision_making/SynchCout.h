@@ -10,6 +10,8 @@
 
 #ifndef DISABLE_DECISION_MAKING_LOG
 
+#include <iostream>
+
 #include <boost/thread.hpp>
 #include <deque>
 #include <boost/thread/mutex.hpp>
